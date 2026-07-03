@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AKG.STUDYS • Futuristic Academic Hub</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+  <!-- Lucide Icons Development Package -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="dark-theme">
+  <!-- Futuristic Decorative Background Gradients -->
+  <div class="glow-bg">
+    <div class="glow-circle sphere-1"></div>
+    <div class="glow-circle sphere-2"></div>
+  </div>
+
+  <div class="app-container">
+    <!-- Header Area -->
+    <header class="app-header">
+      <div class="brand">
+        <div class="logo">AKG</div>
+        <div class="brand-text">
+          <div class="title-row">
+            <h1>AKG.STUDYS</h1>
+            <span class="badge">Core Engine v3</span>
+          </div>
+          <p class="subtitle">Futuristic Learning Hub • Founded by <span class="founder-highlight">Abhishek Gangwar</span></p>
+        </div>
+      </div>
+
+      <!-- Desktop Navigation Tab Rails -->
+      <nav class="desktop-nav">
+        <button class="nav-btn active" data-tab="notes"><i data-lucide="book-open"></i>Syllabus Notes</button>
+        <button class="nav-btn" data-tab="solve"><i data-lucide="clipboard"></i>Exam Solver</button>
+        <button class="nav-btn" data-tab="planner"><i data-lucide="calendar"></i>Study Planner</button>
+        <button class="nav-btn" data-tab="chat"><i data-lucide="message-square"></i>AI Assistant</button>
+        <button class="nav-btn" data-tab="founder"><i data-lucide="terminal"></i>Founder Control</button>
+      </nav>
+
+      <!-- Theme Controls -->
+      <div class="header-controls">
+        <button id="theme-toggle" class="control-btn"><i data-lucide="sun" id="theme-icon"></i></button>
+        <button id="menu-toggle" class="control-btn mobile-only"><i data-lucide="menu"></i></button>
+      </div>
+    </header>
+
+    <!-- Mobile Navigation Menu -->
+    <nav class="mobile-nav hidden" id="mobile-menu">
+      <button class="nav-btn active" data-tab="notes"><i data-lucide="book-open"></i>Syllabus Notes</button>
+      <button class="nav-btn" data-tab="solve"><i data-lucide="clipboard"></i>Exam Solver</button>
+      <button class="nav-btn" data-tab="planner"><i data-lucide="calendar"></i>Study Planner</button>
+      <button class="nav-btn" data-tab="chat"><i data-lucide="message-square"></i>AI Assistant</button>
+      <button class="nav-btn" data-tab="founder"><i data-lucide="terminal"></i>Founder Control</button>
+    </nav>
+
+    <!-- Daily Active Motivation Marquee Banner -->
+    <div class="motivation-banner">
+      <div class="banner-content">
+        <div class="banner-icon"><i data-lucide="award"></i></div>
+        <div>
+          <h4>Abhishek's Active Learning Directive</h4>
+          <p id="motivational-quote">"Intelligence is the dynamic optimization of knowledge. True speed is secured by structured recall."</p>
+        </div>
+      </div>
+      <div class="banner-tag">
+        <span id="current-task-badge">🎯 Next core node: Syllabus Mapping</span>
+      </div>
+    </div>
+
+    <!-- MAIN APP VIEWPORTS -->
+    <main class="viewport">
+      
+      <!-- TAB 1: SYLLABUS NOTES -->
+      <section id="tab-notes" class="tab-pane active">
+        <div class="grid-layout">
+          <div class="panel-left">
+            <div class="cyber-card accent-cyan">
+              <div class="card-header">
+                <div class="icon-wrap"><i data-lucide="upload"></i></div>
+                <div>
+                  <h3>Syllabus Core Analyzer</h3>
+                  <p>Deconstruct syllabi into detailed concepts and sample papers</p>
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label>Subject / Course Title</label>
+                <input type="text" id="notes-subject" placeholder="e.g. Quantum Dynamics, Discrete Mathematics">
+              </div>
+
+              <div class="form-group">
+                <label>Syllabus Document Source</label>
+                <div class="upload-dropzone" id="notes-dropzone">
+                  <i data-lucide="book-open"></i>
+                  <p id="notes-filename">Drag files here or click to upload</p>
+                  <span class="file-info">Accepts raw syllabus images, txt, or md files</span>
+                  <input type="file" id="notes-file-input" style="display: none;" accept="image/*,text/plain,.md,.txt">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Paste Syllabus Text Directly</label>
+                <textarea id="notes-text" rows="5" placeholder="Paste chapters, reference titles, or grading parameters here..."></textarea>
+              </div>
+
+              <div class="form-group">
+                <label>Custom Overrides (Optional)</label>
+                <input type="text" id="notes-custom-prompt" placeholder="e.g. Focus on numerical coding examples">
+              </div>
+
+              <button class="btn btn-cyan btn-glow w-full" id="btn-generate-notes">
+                <i data-lucide="sparkles"></i> Deconstruct & Generate Notes
+              </button>
+            </div>
+            
+            <div class="library-card">
+              <div class="lib-header">
+                <h4>Syllabus Library</h4>
+                <span class="badge" id="library-count">0 items</span>
+              </div>
+              <div class="search-wrap">
+                <input type="text" id="library-search" placeholder="Filter materials...">
+              </div>
+              <div class="lib-list" id="notes-library-list">
+                <p class="empty-text">No custom syllabi processed yet.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel-right">
+            <div class="display-container" id="notes-display-empty">
+              <div class="bouncing-icon"><i data-lucide="book-open"></i></div>
+              <h3>Interactive Classroom Lounge</h3>
+              <p>Your comprehensive study notes, comparative matrices, and dynamic sample papers will render here.</p>
+            </div>
+            
+            <div class="display-container hidden" id="notes-display-active">
+              <div class="tab-controls-header">
+                <h3 id="active-notes-title">Quantum Computing Notes</h3>
+                <div class="subtabs">
+                  <button class="subtab-btn active" data-subtab="study-notes">Classroom Notes</button>
+                  <button class="subtab-btn" data-subtab="sample-paper">Sample Exam Paper</button>
+                </div>
+              </div>
+              <div class="utility-toolbar">
+                <span class="mono-info" id="notes-bytes">Size: -- KB</span>
+                <div class="actions">
+                  <button class="text-link" id="btn-copy-notes"><i data-lucide="copy"></i>Copy Markdown</button>
+                  <button class="text-link" id="btn-download-notes"><i data-lucide="download"></i>Download .md</button>
+                </div>
+              </div>
+              <div class="render-output text-left" id="notes-render-box">
+                <!-- Notes Content Appended dynamically -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: EXAM PAPER SOLVER -->
+      <section id="tab-solve" class="tab-pane">
+        <div class="grid-layout">
+          <div class="panel-left">
+            <div class="cyber-card accent-purple">
+              <div class="card-header">
+                <div class="icon-wrap"><i data-lucide="camera"></i></div>
+                <div>
+                  <h3>Exam Paper Solver</h3>
+                  <p>Scan question sheets for complete step-by-step solutions</p>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Paper Reference Title</label>
+                <input type="text" id="solve-title" placeholder="e.g. Midterm Maths, Physics 2026 Set A">
+              </div>
+
+              <div class="camera-actions">
+                <button class="btn-secondary" id="btn-trigger-camera"><i data-lucide="camera"></i>Use Device Camera</button>
+                <button class="btn-secondary" id="btn-trigger-upload"><i data-lucide="image"></i>Gallery Upload</button>
+                <input type="file" id="solve-file-input" style="display: none;" accept="image/*,text/plain,.txt,.md">
+              </div>
+
+              <!-- Camera View Modal Frame -->
+              <div class="camera-preview-box hidden" id="camera-box">
+                <video id="webcam" autoplay playsinline></video>
+                <div class="camera-controls">
+                  <span class="live-indicator"><span class="ping"></span>Live Lens</span>
+                  <button class="btn btn-rose btn-xs" id="btn-capture-frame">Capture</button>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Paste Questions / Problems</label>
+                <textarea id="solve-text" rows="5" placeholder="Paste mathematical derivations, programming functions, or questions here..."></textarea>
+              </div>
+
+              <div class="form-group">
+                <label>Solver Directives (Optional)</label>
+                <input type="text" id="solve-custom-prompt" placeholder="e.g. Show full calculation proofs and equations">
+              </div>
+
+              <button class="btn btn-purple btn-glow w-full" id="btn-solve-paper">
+                <i data-lucide="sparkles"></i> Analyze & Formulate Exam Keys
+              </button>
+            </div>
+
+            <div class="library-card">
+              <div class="lib-header">
+                <h4>Solved Directory</h4>
+                <span class="badge" id="solved-count">0 items</span>
+              </div>
+              <div class="lib-list" id="solved-library-list">
+                <p class="empty-text">No exam sheets processed yet.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel-right">
+            <div class="display-container" id="solve-display-empty">
+              <div class="bouncing-icon"><i data-lucide="clipboard"></i></div>
+              <h3>Academic Topper Portal</h3>
+              <p>Your step-by-step solved question guides, formulas, and colorful revision sticky cards will generate here.</p>
+            </div>
+
+            <div class="display-container hidden" id="solve-display-active">
+              <div class="tab-controls-header">
+                <h3 id="active-solved-title">Physics 2026 Set A Solutions</h3>
+                <div class="subtabs">
+                  <button class="subtab-btn active" data-subtab="step-solutions">Step-by-Step Solutions</button>
+                  <button class="subtab-btn" data-subtab="sticky-board">Revision Sticky Board</button>
+                </div>
+              </div>
+              <div class="utility-toolbar">
+                <span class="mono-info" id="solved-bytes">Size: -- KB</span>
+                <div class="actions">
+                  <button class="text-link" id="btn-copy-solutions"><i data-lucide="copy"></i>Copy Sheet</button>
+                  <button class="text-link" id="btn-download-solutions"><i data-lucide="download"></i>Download</button>
+                </div>
+              </div>
+              
+              <!-- Subtab 1: Step Solutions rendering box -->
+              <div class="render-output text-left" id="solved-solutions-box"></div>
+              
+              <!-- Subtab 2: Interactive Sticky Notes board -->
+              <div class="sticky-board-view hidden" id="solved-sticky-box">
+                <div class="sticky-header">
+                  <h4>Active Revision Memo Pins</h4>
+                  <p>Mnemonic lists and key formulas parsed from the questions</p>
+                </div>
+                <div class="sticky-grid" id="sticky-board-grid">
+                  <!-- Generated cards will pin here dynamically -->
+                </div>
+                <form class="manual-sticky-form" id="add-sticky-form">
+                  <h5>Add Rapid Mnemonic</h5>
+                  <input type="text" id="manual-sticky-text" placeholder="e.g. Euler: e^(i*pi) + 1 = 0">
+                  <div class="form-footer">
+                    <div class="color-picker">
+                      <span class="dot yellow active" data-color="yellow"></span>
+                      <span class="dot cyan" data-color="cyan"></span>
+                      <span class="dot green" data-color="green"></span>
+                      <span class="dot purple" data-color="purple"></span>
+                    </div>
+                    <button type="submit" class="btn btn-rose btn-xs">Pin Card</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: INTUITIVE STUDY PLANNER -->
+      <section id="tab-planner" class="tab-pane">
+        <div class="planner-banner-grid">
+          <div class="stat-box">
+            <span class="stat-label">Pending Study Hours</span>
+            <h2 id="stat-pending-hours">0 mins</h2>
+            <p id="stat-pending-count">0 study blocks remaining</p>
+          </div>
+          <div class="stat-box">
+            <span class="stat-label">Tasks Checked Off</span>
+            <h2 id="stat-completed-count" class="success-text">0 topics</h2>
+            <p id="stat-completed-hours">0 mins completed</p>
+          </div>
+          <div class="stat-box">
+            <span class="stat-label">System Performance Ratio</span>
+            <h2 id="stat-ratio" class="purple-text">0%</h2>
+            <p>Active learning factor</p>
+          </div>
+          <div class="stat-box">
+            <span class="stat-label">System Score</span>
+            <h2 class="rose-text">IQ140</h2>
+            <p>Intellectual alignment</p>
+          </div>
+        </div>
+
+        <div class="grid-layout mt-6">
+          <div class="panel-left lg:col-span-8">
+            <div class="cyber-card">
+              <div class="planner-actions-bar">
+                <div class="flex-row">
+                  <i data-lucide="list-todo" class="cyan-text"></i>
+                  <h3>Intelligent Active Planner</h3>
+                </div>
+                <div class="actions">
+                  <button class="btn btn-secondary btn-xs" id="btn-load-presets">Load Presets</button>
+                  <button class="btn btn-cyan btn-xs" id="btn-toggle-task-form">New Focus Block</button>
+                </div>
+              </div>
+
+              <!-- Collapsible Add Task Form -->
+              <form class="task-form hidden" id="task-creation-form">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Target Subject</label>
+                    <input type="text" id="task-subject" placeholder="e.g. Mathematics" required>
+                  </div>
+                  <div class="form-group">
+                    <label>Actionable Goal</label>
+                    <input type="text" id="task-title" placeholder="e.g. Deconstruct Fourier transform derivations" required>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Duration (Minutes)</label>
+                    <input type="number" id="task-duration" value="45" min="5" required>
+                  </div>
+                  <div class="form-group">
+                    <label>Priority</label>
+                    <select id="task-priority">
+                      <option value="low">Low Priority</option>
+                      <option value="medium" selected>Medium Priority</option>
+                      <option value="high">High Priority</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="flex-row justify-end mt-2">
+                  <button type="submit" class="btn btn-cyan btn-xs">Add Focus Session</button>
+                </div>
+              </form>
+
+              <!-- Active Planner List View -->
+              <div class="planner-list" id="planner-tasks-list">
+                <p class="empty-text py-12">Planner list is empty. Click "Load Presets" or write your own study targets to construct focus nodes.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel-right lg:col-span-4">
+            <div class="cyber-card accent-rose">
+              <i data-lucide="alert-triangle" class="cyan-text"></i>
+              <h4 class="mt-2">Abhishek's Strategy Manual</h4>
+              <p class="text-xs text-muted leading-relaxed mt-1">
+                "Never study blindly. Deconstruct curricula, prepare targeted key revision blocks, and solve real papers under exam constraint simulations. That is the mathematical highway to the 99th percentile."
+              </p>
+              <ul class="rule-list mt-4 text-xs">
+                <li><span>1.</span> Notes generated 7 days before major assessments organize memory cells.</li>
+                <li><span>2.</span> Keep session blocks strict at 45-60 minute intervals with 5 min mnemonic checks.</li>
+                <li><span>3.</span> Re-read yellow revision pin notes before sleep to activate neurological memory.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: AI CHAT ASSISTANT -->
+      <section id="tab-chat" class="tab-pane">
+        <div class="grid-layout">
+          <div class="panel-left">
+            <div class="cyber-card">
+              <div class="card-header">
+                <div class="icon-wrap animate-pulse"><i data-lucide="brain-circuit"></i></div>
+                <div>
+                  <h3>AI Assistant Core</h3>
+                  <p>Intellectual chat and dynamic tuning metrics</p>
+                </div>
+              </div>
+              
+              <div class="quick-prompts-list">
+                <button class="quick-p-btn" data-prompt="Can you summarize my generated notes in 5 key takeaways?">Summarize Generated Syllabus</button>
+                <button class="quick-p-btn" data-prompt="Explain the core derivations for Quantum computing with text-based ASCII visual flowcharts.">Formula ASCII Visualizer</button>
+                <button class="quick-p-btn" data-prompt="Write a 4-question challenging multiple-choice exam on Discrete Mathematics with step answers.">Create Quick Assessment Quiz</button>
+                <button class="quick-p-btn" data-prompt="Give me memorable and interesting mnemonics to master computer science database normalization steps.">Formulate Normalization Mnemonics</button>
+              </div>
+
+              <div class="bot-info-card">
+                <i data-lucide="help-circle"></i>
+                <p>This academic model runs on the high-IQ Google Gemini 3.5 engine with comprehensive contextual tracking.</p>
+              </div>
+              
+              <button class="btn btn-secondary w-full" id="btn-clear-chat"><i data-lucide="trash-2"></i>Clear Chat History</button>
+            </div>
+          </div>
+
+          <div class="panel-right">
+            <div class="chat-container">
+              <div class="chat-history" id="chat-messages-box">
+                <div class="message system">
+                  <div class="avatar"><i data-lucide="graduation-cap"></i></div>
+                  <div class="bubble">
+                    <p>Greetings, Academic Scholar. I am the AKG AI system. How can I help you customize your notes, solve equations, or optimize your study schedules today?</p>
+                  </div>
+                </div>
+              </div>
+              <form class="chat-input-bar" id="chat-input-form">
+                <input type="text" id="chat-user-input" placeholder="Ask AKG Study Hub anything..." required>
+                <button type="submit" class="btn btn-cyan btn-glow"><i data-lucide="send"></i></button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 5: FOUNDER OVERRIDE DASHBOARD -->
+      <section id="tab-founder" class="tab-pane">
+        <!-- Secure Gate Section -->
+        <div class="secure-gate-box" id="founder-login-box">
+          <div class="glow-lock animate-glow"><i data-lucide="lock"></i></div>
+          <h3>Abhishek Gangwar Dashboard</h3>
+          <p class="text-xs text-muted">Acknowledge credentials to access central application override modules.</p>
+          <form class="mt-4" id="founder-login-form">
+            <input type="password" id="founder-password" placeholder="Founder passcode (abhishek)" required>
+            <p class="error-msg hidden" id="login-error-text">Unauthorized Passcode Token.</p>
+            <button type="submit" class="btn btn-cyan w-full mt-2"><i data-lucide="unlock"></i>Verify Credential Token</button>
+          </form>
+        </div>
+
+        <!-- Authenticated Settings Panels -->
+        <div class="founder-dashboard hidden" id="founder-dashboard-active">
+          <div class="success-banner">
+            <i data-lucide="shield-check"></i>
+            <div>
+              <h3>Founder Control Center Active</h3>
+              <p>Security protocol confirmed • Override engines fully unlocked</p>
+            </div>
+          </div>
+
+          <div class="grid-layout mt-6">
+            <div class="panel-left">
+              <div class="cyber-card">
+                <div class="flex-row">
+                  <i data-lucide="settings" class="cyan-text"></i>
+                  <h4>Core Engine Settings</h4>
+                </div>
+
+                <div class="form-group mt-4">
+                  <label>AI Pedagogical Difficulty</label>
+                  <select id="founder-difficulty">
+                    <option value="Standard">Standard Student</option>
+                    <option value="Elite Grader">Elite Grader</option>
+                    <option value="Super Scholar" selected>Super Scholar (Abhishek Spec)</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label>Theme Highlight Element</label>
+                  <select id="founder-theme-color">
+                    <option value="cyan">Cyber Neon Cyan</option>
+                    <option value="purple">Quantum Magenta Purple</option>
+                    <option value="emerald">Matrix Emerald Green</option>
+                    <option value="rose">Cosmic Rose Red</option>
+                  </select>
+                </div>
+
+                <div class="checkbox-group">
+                  <input type="checkbox" id="founder-include-visuals" checked>
+                  <label for="founder-include-visuals">Enforce Graphical ASCII diagrams in solved outputs</label>
+                </div>
+
+                <div class="form-group">
+                  <label>Custom Notes System Prompt Override</label>
+                  <textarea id="founder-notes-prompt" rows="3">Explain mathematical proofs comprehensively, and present comparative matrices inside Markdown tables.</textarea>
+                </div>
+
+                <button class="btn btn-cyan w-full" id="btn-save-founder-settings">Apply Parameters Override</button>
+              </div>
+            </div>
+
+            <div class="panel-right">
+              <div class="cyber-card">
+                <h4>Engine Memory Flush</h4>
+                <p class="text-xs text-muted leading-relaxed mt-1">Reset application database storage loops, local caches, and delete processed documents completely.</p>
+                <button class="btn btn-rose w-full mt-4" id="btn-hard-reset">Hard Reset Application Cache</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer Area -->
+    <footer class="app-footer">
+      <p>AKG.STUDYS © 2026 • Designed for Academic Hegemony</p>
+      <p class="faint">Engineered on high-IQ microservice container nodes • Dynamic proxy rules secured</p>
+    </footer>
+  </div>
+
+  <!-- JavaScript script -->
+  <script src="script.js"></script>
+</body>
+</html>
