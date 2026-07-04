@@ -93,8 +93,9 @@ Let us define the coefficient of structural transfer $C_t$:
 $$C_t = \\frac{\\sum_{i=1}^{n} E_i}{\\beta \\cdot \\theta_{max}}$$
 Where $\\beta$ represents the alignment constant and $\\theta_{max}$ is the peak capacity index.
 
-\`\`\`
-  +--------------------------------------------+
+  \`\`\`
+
++--------------------------------------------+
   |              SYLLABUS CORE NODE            |
   +--------------------------------------------+
                         |
@@ -510,32 +511,61 @@ $$\\mu_s = \\sqrt{P_0 \\cdot \\tau_{max}} = \\sqrt{104.2 \\cdot 1.45} = 12.29$$
   const chatInput = document.getElementById("chat-user-input");
   const btnClearChat = document.getElementById("btn-clear-chat");
 
-  chatForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const input = chatInput.value.trim();
-    if (!input) return;
+ chatForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-    appendChatMessage("user", input);
-    chatInput.value = "";
+  const userMessage = chatInput.value.trim();
+  if (!userMessage) return;
 
-    // Trigger Smart simulated response instantly
-    setTimeout(() => {
-      const response = formulateSimulatedResponse(input);
-      appendChatMessage("system", response);
-    }, 600);
-  });
+  appendChatMessage("user", userMessage);
+  chatInput.value = "";
+
+  try {
+    const res = await fetch("https://abhi977263.app.n8n.cloud/webhook-test/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        message: userMessage
+      })
+    });
+
+    const data = await res.json();
+    appendChatMessage("system", data.response);
+
+  } catch (error) {
+    console.error(error);
+    appendChatMessage("system", "❌ Error: Unable to connect to AI server.");
+  }
+});
 
   document.querySelectorAll(".quick-p-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const prompt = btn.getAttribute("data-prompt");
-      appendChatMessage("user", prompt);
-      setTimeout(() => {
-        const response = formulateSimulatedResponse(prompt);
-        appendChatMessage("system", response);
-      }, 600);
-    });
-  });
+  btn.addEventListener("click", async () => {
+    const prompt = btn.getAttribute("data-prompt");
 
+    appendChatMessage("user", prompt);
+
+    try {
+      const res = await fetch("https://abhi977263.app.n8n.cloud/webhook-test/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          message: prompt
+        })
+      });
+
+      const data = await res.json();
+      appendChatMessage("system", data.response);
+
+    } catch (error) {
+      console.error(error);
+      appendChatMessage("system", "❌ Error: Unable to connect to AI server.");
+    }
+  });
+});
   btnClearChat.addEventListener("click", () => {
     chatMessagesBox.innerHTML = `
       <div class="message system">
@@ -687,33 +717,7 @@ To secure an elite score, implement the following actions:
     return html;
   }
 
-  // Camera Snapshot Mechanics (Using standard navigator WebRTC stream)
-  const btnTriggerCamera = document.getElementById("btn-trigger-camera");
-  const cameraBox = document.getElementById("camera-box");
-  const webcam = document.getElementById("webcam");
-  const btnCaptureFrame = document.getElementById("btn-capture-frame");
-
-  btnTriggerCamera.addEventListener("click", async () => {
-    if (cameraBox.classList.contains("hidden")) {
-      cameraBox.classList.remove("hidden");
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
-        webcam.srcObject = stream;
-        webcam.play();
-      } catch (err) {
-        alert("Camera integration unavailable. Please utilize gallery upload instead.");
-        cameraBox.classList.add("hidden");
-      }
-    } else {
-      stopCameraStream();
-    }
-  });
-
-  btnCaptureFrame.addEventListener("click", () => {
-    // Render static question paper details upon camera snapshot confirmation
-    document.getElementById("solve-title").value = "Scanned Physics Final Mock";
-    document.getElementById("solve-text").value = `
-[Scanned Image Data Captured]
+ 
 1. Prove continuous alignment parameters reduce friction.
 2. Calculate stability coefficient index parameters.
 `;
